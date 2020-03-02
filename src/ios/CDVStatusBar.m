@@ -124,6 +124,14 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     _statusBarOverlaysWebView = YES; // default
 
+    // This prevents a bug where the web view isn't the full height when using the StatusBarOverlaysWebView settings
+    // This might not be a really good general solution but it works for our usecase.
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
+    if (@available(iOS 11.0, *)) {
+        [self.webView.scrollView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    }
+    #endif
+
     [self initializeStatusBarBackgroundView];
 
     self.viewController.view.autoresizesSubviews = YES;
