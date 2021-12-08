@@ -82,7 +82,11 @@ var StatusBar = {
     show: function () {
         exec(null, null, 'StatusBar', 'show', []);
         StatusBar.isVisible = true;
-    }
+    },
+
+    height: function (onSuccess, onError) {
+        exec(onSuccess, onError, "StatusBar", "height", []);
+    },
 };
 
 // prime it. setTimeout so that proxy gets time to init

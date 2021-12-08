@@ -42,7 +42,9 @@
 
 - (void) hide:(CDVInvokedUrlCommand*)command;
 - (void) show:(CDVInvokedUrlCommand*)command;
-    
+
+- (void) height:(CDVInvokedUrlCommand*)command;
+
 - (void) _ready:(CDVInvokedUrlCommand*)command;
 
 @end

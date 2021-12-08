@@ -44,6 +44,7 @@ public class StatusBar extends CordovaPlugin {
     private static final String ACTION_HIDE = "hide";
     private static final String ACTION_SHOW = "show";
     private static final String ACTION_READY = "_ready";
+    private static final String ACTION_HEIGHT = "height";
     private static final String ACTION_BACKGROUND_COLOR_BY_HEX_STRING = "backgroundColorByHexString";
     private static final String ACTION_OVERLAYS_WEB_VIEW = "overlaysWebView";
     private static final String ACTION_STYLE_DEFAULT = "styleDefault";
@@ -106,6 +107,11 @@ public class StatusBar extends CordovaPlugin {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, statusBarVisible));
                 return true;
 
+            case ACTION_HEIGHT:
+                float statusBarHeight = getStatusBarHeight();
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, statusBarHeight));
+                return true;
+
             case ACTION_SHOW:
                 activity.runOnUiThread(() -> {
                     int uiOptions = window.getDecorView().getSystemUiVisibility();
@@ -165,6 +171,16 @@ public class StatusBar extends CordovaPlugin {
             default:
                 return false;
         }
+    }
+
+    private float getStatusBarHeight() {
+        float statusBarHeight = 0;
+        int resourceId = cordova.getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            float scaleRatio = cordova.getActivity().getResources().getDisplayMetrics().density;
+            statusBarHeight = cordova.getActivity().getResources().getDimension(resourceId) / scaleRatio;
+        }
+        return statusBarHeight;
     }
 
     private void setStatusBarBackgroundColor(final String colorPref) {

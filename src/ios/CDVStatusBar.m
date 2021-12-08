@@ -418,6 +418,13 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     }
 }
 
+- (void) height:(CDVInvokedUrlCommand*)command
+{
+    double statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDouble:statusBarHeight];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 -(void)resizeStatusBarBackgroundView {
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
     CGRect sbBgFrame = _statusBarBackgroundView.frame;
